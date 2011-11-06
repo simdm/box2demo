@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Box2D/Box2D.h>
 
-@interface ViewController : UIViewController
+#define PTM_RATIO 16
+
+@interface ViewController : UIViewController {
+    b2World* world;
+	NSTimer *tickTimer;
+}
+
+-(void)createPhysicsWorld;
+-(void)addPhysicalBodyForView:(UIView *)physicalView;
+-(void) tick:(NSTimer *)timer;
+
 
 @end
