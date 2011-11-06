@@ -214,8 +214,19 @@
 
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
 {
+    CGPoint accel = CGPointMake(acceleration.x, acceleration.y);
+    if ([self interfaceOrientation] == UIInterfaceOrientationPortraitUpsideDown) {
+        accel.x *= -1.0f;
+        accel.y *= -1.0f;
+    } else if ([self interfaceOrientation] == UIInterfaceOrientationLandscapeLeft) {
+        accel = CGPointMake(acceleration.y, -acceleration.x);
+    } else if ([self interfaceOrientation] == UIInterfaceOrientationLandscapeRight) {
+        accel = CGPointMake(-acceleration.y, acceleration.x);
+    }
+    
 	b2Vec2 gravity;
-	gravity.Set( acceleration.x * 9.81,  acceleration.y * 9.81 );
+	gravity.Set( accel.x * 9.81,  accel.y * 9.81 );
+    
     
 	world->SetGravity(gravity);
 }
