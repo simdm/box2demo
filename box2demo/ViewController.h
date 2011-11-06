@@ -16,6 +16,8 @@
 	NSTimer *tickTimer;
 }
 
+- (void)startSimulation;
+
 -(void)createPhysicsWorld;
 -(void)addPhysicalBodyForView:(UIView *)physicalView;
 -(void) tick:(NSTimer *)timer;

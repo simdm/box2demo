@@ -26,7 +26,13 @@
     }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    [self performSelector:@selector(startSimulation) withObject:nil afterDelay:0.25f];
     return YES;
+}
+
+- (void)startSimulation
+{
+    [self.viewController startSimulation];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

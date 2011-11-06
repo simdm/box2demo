@@ -18,24 +18,10 @@
 
 #pragma mark - View lifecycle
 
-//- (void)viewDidLoad
-//{
-//    [super viewDidLoad];
-//	// Do any additional setup after loading the view, typically from a nib.
-//}
-
 - (void)viewDidLoad
 {
-	[super viewDidLoad];
-    
-	[self createPhysicsWorld];
-    
-	for (UIView *oneView in self.view.subviews)
-	{
-		[self addPhysicalBodyForView:oneView];
-	}
-    
-	tickTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0 target:self selector:@selector(tick:) userInfo:nil repeats:YES];
+    [super viewDidLoad];
+	// Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)viewDidUnload
@@ -81,7 +67,22 @@
 }
 
 
-#pragma mark - other stuff from the demo
+#pragma mark - Stuff I added
+
+- (void)startSimulation
+{
+    [self createPhysicsWorld];
+    
+	for (UIView *oneView in self.view.subviews)
+	{
+		[self addPhysicalBodyForView:oneView];
+	}
+    
+	tickTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0 target:self selector:@selector(tick:) userInfo:nil repeats:YES];
+}
+
+
+#pragma mark - Stuff from the original demo (slightly hacked)
 
 -(void)createPhysicsWorld
 {
@@ -112,20 +113,23 @@
 	// Define the ground box shape.
 	b2EdgeShape groundBox;
     
+    CGSize worldSize = CGSizeMake(screenSize.width/PTM_RATIO,
+                                  screenSize.height/PTM_RATIO);
+    
 	// bottom
-	groundBox.Set(b2Vec2(0,0), b2Vec2(screenSize.width/PTM_RATIO,0));
+	groundBox.Set(b2Vec2(0,0), b2Vec2(worldSize.width,0));
 	groundBody->CreateFixture(&groundBox, 0);
     
 	// top
-	groundBox.Set(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO));
+	groundBox.Set(b2Vec2(0,worldSize.height), b2Vec2(worldSize.width,worldSize.height));
 	groundBody->CreateFixture(&groundBox, 0);
     
 	// left
-	groundBox.Set(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(0,0));
+	groundBox.Set(b2Vec2(0,worldSize.height), b2Vec2(0,0));
 	groundBody->CreateFixture(&groundBox, 0);
     
 	// right
-	groundBox.Set(b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,0));
+	groundBox.Set(b2Vec2(worldSize.width,worldSize.height), b2Vec2(worldSize.width,0));
 	groundBody->CreateFixture(&groundBox, 0);
 }
 
@@ -136,9 +140,11 @@
 	bodyDef.type = b2_dynamicBody;
     
 	CGPoint p = physicalView.center;
-	CGPoint boxDimensions = CGPointMake(physicalView.bounds.size.width/PTM_RATIO/2.0,physicalView.bounds.size.height/PTM_RATIO/2.0);
+	CGPoint boxDimensions = CGPointMake(physicalView.bounds.size.width/PTM_RATIO/2.0,
+                                        physicalView.bounds.size.height/PTM_RATIO/2.0);
     
-	bodyDef.position.Set(p.x/PTM_RATIO, (460.0 - p.y)/PTM_RATIO);
+	bodyDef.position.Set(p.x/PTM_RATIO,
+                         (CGRectGetHeight(self.view.bounds) - p.y)/PTM_RATIO);
 	bodyDef.userData = (__bridge void *) physicalView;
     
 	// Tell the physics world to create the body
