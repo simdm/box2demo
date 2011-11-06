@@ -1,0 +1,5 @@
+Basic Box2D Demo iOS App
+
+Based on this tutorial: http://www.cocoanetics.com/2010/05/physics-101-uikit-app-with-box2d-for-gravity
+But, hacked to work on iOS 4.3 and Xcode 4.2 with ARC.
+Should be deployable on iOS 4.3 and 5.0.
