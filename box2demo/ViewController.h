@@ -11,16 +11,19 @@
 
 #define PTM_RATIO 16
 
-@interface ViewController : UIViewController {
+@interface ViewController : UIViewController <UIAccelerometerDelegate> {
     b2World* world;
 	NSTimer *tickTimer;
+    
+    BOOL isInitialInterfaceOrientationSet;
 }
+
+@property (nonatomic, assign) BOOL isInitialInterfaceOrientationSet;
 
 - (void)startSimulation;
 
 -(void)createPhysicsWorld;
 -(void)addPhysicalBodyForView:(UIView *)physicalView;
 -(void) tick:(NSTimer *)timer;
-
 
 @end

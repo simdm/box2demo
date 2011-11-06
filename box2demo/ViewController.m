@@ -10,6 +10,9 @@
 
 @implementation ViewController
 
+@synthesize isInitialInterfaceOrientationSet;
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -22,6 +25,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    self.isInitialInterfaceOrientationSet = NO;
 }
 
 - (void)viewDidUnload
@@ -54,11 +58,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-    } else {
-        return YES;
-    }
+    return !isInitialInterfaceOrientationSet;
 }
 
 - (void)dealloc
@@ -71,6 +71,8 @@
 
 - (void)startSimulation
 {
+    self.isInitialInterfaceOrientationSet = YES;
+    
     [self createPhysicsWorld];
     
 	for (UIView *oneView in self.view.subviews)
@@ -79,6 +81,10 @@
 	}
     
 	tickTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0 target:self selector:@selector(tick:) userInfo:nil repeats:YES];
+    
+    //Configure and start accelerometer
+    [[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 60.0)];
+    [[UIAccelerometer sharedAccelerometer] setDelegate:self];
 }
 
 
@@ -201,6 +207,17 @@
 			oneView.transform = transform;
 		}
 	}
+}
+
+
+#pragma mark - Stuff from Accelerometer Bonus Section
+
+- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration
+{
+	b2Vec2 gravity;
+	gravity.Set( acceleration.x * 9.81,  acceleration.y * 9.81 );
+    
+	world->SetGravity(gravity);
 }
 
 
