@@ -3,3 +3,23 @@ Basic Box2D Demo iOS App
 Based on this tutorial: http://www.cocoanetics.com/2010/05/physics-101-uikit-app-with-box2d-for-gravity
 But, hacked to work on iOS 4.3 and Xcode 4.2 with ARC.
 Should be deployable on iOS 4.3 and 5.0.
+
+What I Did:
+- Read the Cocoanetics tutorial listed above.
+- Download Box2D (the version I used is in the Box2D directory of this Github repo).
+- Add the Box2D directory to this project (I copied the files in and selected the dir).
+- Add Box2D to the project's "Header Search Paths," by adding and entry for "${PROJECT_DIR}" and be checking the "Recursive" checkbox.
+- Change the Xcode "File Type" for any files that C++ (Box2D is written in C++) or include the Box2D header.
+
+I changed my .m files to "Objective-C++ source," which is a listed, but not recommended, by the tutorial.  See the tutorial for other options.  The following files were changed:
+- AppDelegate.m
+- ViewController.m
+
+NOTE: The I changed these .m files because they include the ViewController.h header file.  This is the header file in which I added the #include <Box2D/Box2D.h> line.  In your app, make sure you change the file types of any .m files which include similar (Box2D-including) headers.  If you fail to do so, you will not get a friendly warning.  In this case, you'll probably get a message from the compiler saying it can't locate things you don't recognize (but having to do with Box2D, like cassert, etc.)
+
+Also, if your application delegate .m file doesn't include the view controller .h file where you're including Box2D, there is no need to change its file type.
+
+If you don't know where to find the File Type in Xcode:
+"File Type" is listed under the "Identity and Type" accordion section of the "File Inspector" for each file.  To find it for a file, click on the file in the project navigator, then in the right hand side "Utilities" area, click on the "File Inspector" tab (looks like a document).  Expand the "Identity and Type" section (if not already expanded).  You should now see the "File Type" drop down list.
+
+- Build and run.  You should be error free.
