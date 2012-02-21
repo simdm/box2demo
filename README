@@ -9,6 +9,7 @@ What I Did:
 - Download Box2D (the version I used is in the Box2D directory of this Github repo).
 - Add the Box2D directory to this project (I copied the files in and selected the dir).
 - Add Box2D to the project's "Header Search Paths," by adding and entry for "${PROJECT_DIR}" and be checking the "Recursive" checkbox.
+- Also, while you're looking at the project properties, make sure "Always Search User Paths" is checked.
 - Change the Xcode "File Type" for any files that C++ (Box2D is written in C++) or include the Box2D header.
 
 I changed my .m files to "Objective-C++ source," which is a listed, but not recommended, by the tutorial.  See the tutorial for other options.  The following files were changed:
@@ -23,3 +24,35 @@ If you don't know where to find the File Type in Xcode:
 "File Type" is listed under the "Identity and Type" accordion section of the "File Inspector" for each file.  To find it for a file, click on the file in the project navigator, then in the right hand side "Utilities" area, click on the "File Inspector" tab (looks like a document).  Expand the "Identity and Type" section (if not already expanded).  You should now see the "File Type" drop down list.
 
 - Build and run.  You should be error free.
+
+
+Notes on the tutorial:
+- In createPhysicsWorld, change these lines:
+    // Construct a world object, which will hold and simulate the rigid bodies.
+    world = new b2World(gravity, doSleep);
+
+  To this:
+    // Construct a world object, which will hold and simulate the rigid bodies.
+    world = new b2World(gravity);
+    world->SetAllowSleeping(doSleep);
+  
+- In addPhysicalBodyForView:physicalView, change this line:
+  	bodyDef.userData = physicalView;
+  	
+  To this:
+  	bodyDef.userData = (__bridge void *) physicalView;
+
+- In tick:timer, change this line:
+    UIView *oneView = (UIView *)b->GetUserData();
+    
+  To this:
+		UIView *oneView = (__bridge UIView *)b->GetUserData();
+		
+- I don't recommend creating the Box2D world in viewDidLoad.  I recommend adding it later (like in viewWillAppear, or later).  This is because the size of the main view might change, for example due to the addition of a navigation bar.
+
+- I also recommend removing the hard coded screen height in addPhysicalBodyForView:physicalView, by changing this line:
+    bodyDef.position.Set(p.x/PTM_RATIO, (460.0 - p.y)/PTM_RATIO);
+
+  To this:
+    bodyDef.position.Set(p.x/PTM_RATIO,
+                           (CGRectGetHeight(self.view.bounds) - p.y)/PTM_RATIO);
