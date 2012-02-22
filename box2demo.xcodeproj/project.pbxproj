@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CFEF42BA14F571D2004CE03C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFEF42B914F571D2004CE03C /* QuartzCore.framework */; };
 		CFFCD41014665D2F0089AEF1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFCD40F14665D2F0089AEF1 /* UIKit.framework */; };
 		CFFCD41214665D2F0089AEF1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFCD41114665D2F0089AEF1 /* Foundation.framework */; };
 		CFFCD41414665D2F0089AEF1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFFCD41314665D2F0089AEF1 /* CoreGraphics.framework */; };
@@ -66,6 +67,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CFEF42B914F571D2004CE03C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CFFCD40B14665D2F0089AEF1 /* box2demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = box2demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFFCD40F14665D2F0089AEF1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CFFCD41114665D2F0089AEF1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -180,6 +182,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFEF42BA14F571D2004CE03C /* QuartzCore.framework in Frameworks */,
 				CFFCD41014665D2F0089AEF1 /* UIKit.framework in Frameworks */,
 				CFFCD41214665D2F0089AEF1 /* Foundation.framework in Frameworks */,
 				CFFCD41414665D2F0089AEF1 /* CoreGraphics.framework in Frameworks */,
@@ -209,6 +212,7 @@
 		CFFCD40E14665D2F0089AEF1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CFEF42B914F571D2004CE03C /* QuartzCore.framework */,
 				CFFCD40F14665D2F0089AEF1 /* UIKit.framework */,
 				CFFCD41114665D2F0089AEF1 /* Foundation.framework */,
 				CFFCD41314665D2F0089AEF1 /* CoreGraphics.framework */,
@@ -561,7 +565,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -582,7 +586,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -641,6 +645,7 @@
 				CFFCD42E14665D2F0089AEF1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -23,6 +23,7 @@ Also, if your application delegate .m file doesn't include the view controller .
 If you don't know where to find the File Type in Xcode:
 "File Type" is listed under the "Identity and Type" accordion section of the "File Inspector" for each file.  To find it for a file, click on the file in the project navigator, then in the right hand side "Utilities" area, click on the "File Inspector" tab (looks like a document).  Expand the "Identity and Type" section (if not already expanded).  You should now see the "File Type" drop down list.
 
+- I replaced the use of the demo's NSTimer to CADisplayLink.  In order to use this, you must link the QuartzCore framework.
 - Build and run.  You should be error free.
 
 

@@ -8,22 +8,25 @@
 
 #import <UIKit/UIKit.h>
 #import <Box2D/Box2D.h>
+#import <QuartzCore/QuartzCore.h>
 
 #define PTM_RATIO 16
 
 @interface ViewController : UIViewController <UIAccelerometerDelegate> {
     b2World* world;
-	NSTimer *tickTimer;
     
     BOOL isInitialInterfaceOrientationSet;
 }
 
+@property (nonatomic, strong) CADisplayLink *displayLink;
+@property (nonatomic, assign) double lastTimestamp;
 @property (nonatomic, assign) BOOL isInitialInterfaceOrientationSet;
 
 - (void)startSimulation;
+- (void)stopSimulation;
 
--(void)createPhysicsWorld;
--(void)addPhysicalBodyForView:(UIView *)physicalView;
--(void) tick:(NSTimer *)timer;
+- (void)createPhysicsWorld;
+- (void)addPhysicalBodyForView:(UIView *)physicalView;
+- (void)update:(CADisplayLink *)sender;
 
 @end

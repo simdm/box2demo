@@ -10,6 +10,8 @@
 
 @implementation ViewController
 
+@synthesize displayLink;
+@synthesize lastTimestamp;
 @synthesize isInitialInterfaceOrientationSet;
 
 
@@ -63,7 +65,7 @@
 
 - (void)dealloc
 {
-	[tickTimer invalidate], tickTimer = nil;
+    [self stopSimulation];
 }
 
 
@@ -80,17 +82,25 @@
 		[self addPhysicalBodyForView:oneView];
 	}
     
-	tickTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/60.0 target:self selector:@selector(tick:) userInfo:nil repeats:YES];
+    self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update:)];
+    [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     
     //Configure and start accelerometer
     [[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 60.0)];
     [[UIAccelerometer sharedAccelerometer] setDelegate:self];
 }
 
+- (void)stopSimulation
+{
+    if (!self.displayLink) return;
+    [displayLink invalidate];
+    self.displayLink = nil;
+}
+
 
 #pragma mark - Stuff from the original demo (slightly hacked)
 
--(void)createPhysicsWorld
+- (void)createPhysicsWorld
 {
 	CGSize screenSize = self.view.bounds.size;
     
@@ -140,7 +150,7 @@
 	groundBody->CreateFixture(&groundBox, 0);
 }
 
--(void)addPhysicalBodyForView:(UIView *)physicalView
+- (void)addPhysicalBodyForView:(UIView *)physicalView
 {
 	// Define the dynamic body.
 	b2BodyDef bodyDef;
@@ -177,8 +187,16 @@
 	physicalView.tag = (int)body;
 }
 
--(void) tick:(NSTimer *)timer
+- (void)update:(CADisplayLink *)sender
 {
+    // REMOVE IF UNWANTED: START >>>
+    if (lastTimestamp <= 0) lastTimestamp = sender.timestamp;
+    CGFloat deltaTime = sender.timestamp - lastTimestamp;
+    // timeRemaining -= deltaTime;      // Could do this if you had a timeRemaining.
+    NSLog(@"deltaTime: %f", deltaTime); // Super-unnecessary and a waste of time. 
+    lastTimestamp = sender.timestamp;
+    // REMOVE IF UNWANTED: <<< END
+    
 	//It is recommended that a fixed time step is used with Box2D for stability
 	//of the simulation, however, we are using a variable time step here.
 	//You need to make an informed choice, the following URL is useful
