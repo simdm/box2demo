@@ -19,7 +19,6 @@
 }
 
 @property (nonatomic, strong) CADisplayLink *displayLink;
-@property (nonatomic, assign) double lastTimestamp;
 @property (nonatomic, assign) BOOL isInitialInterfaceOrientationSet;
 
 - (void)startSimulation;

@@ -11,7 +11,6 @@
 @implementation ViewController
 
 @synthesize displayLink;
-@synthesize lastTimestamp;
 @synthesize isInitialInterfaceOrientationSet;
 
 
@@ -189,13 +188,13 @@
 
 - (void)update:(CADisplayLink *)sender
 {
-    // REMOVE IF UNWANTED: START >>>
+    /*
+    // Could do this if you had a timeRemaining (local) and lastTimestamp (property).
     if (lastTimestamp <= 0) lastTimestamp = sender.timestamp;
     CGFloat deltaTime = sender.timestamp - lastTimestamp;
-    // timeRemaining -= deltaTime;      // Could do this if you had a timeRemaining.
-    NSLog(@"deltaTime: %f", deltaTime); // Super-unnecessary and a waste of time. 
+    ti meRemaining -= deltaTime;
     lastTimestamp = sender.timestamp;
-    // REMOVE IF UNWANTED: <<< END
+    */
     
 	//It is recommended that a fixed time step is used with Box2D for stability
 	//of the simulation, however, we are using a variable time step here.
